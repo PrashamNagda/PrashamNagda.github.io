@@ -379,40 +379,14 @@
             <h2 class="section-title">Latest Articles</h2>
             <div class="articles-grid" id="articlesGrid">
                 <div class="article-card" onclick="showArticle(1)">
-                    <div class="article-image">📊</div>
+                    <div class="article-image">⚡</div>
                     <div class="article-content">
                         <div class="article-meta">
-                            <span class="article-tag">Data Science</span>
-                            <span>8 min read</span>
-                        </div>
-                        <h3 class="article-title">Building Production-Ready ML Pipelines: Lessons Learned</h3>
-                        <p class="article-excerpt">A deep dive into creating robust, scalable machine learning pipelines that handle real-world data challenges. From data validation to model deployment...</p>
-                        <span class="read-more">Read more →</span>
-                    </div>
-                </div>
-
-                <div class="article-card" onclick="showArticle(2)">
-                    <div class="article-image">🤖</div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-tag">AI</span>
-                            <span>10 min read</span>
-                        </div>
-                        <h3 class="article-title">The Evolution of Large Language Models: From GPT to Claude</h3>
-                        <p class="article-excerpt">Understanding the architectural innovations that are shaping the next generation of AI assistants and how they're transforming human-computer interaction...</p>
-                        <span class="read-more">Read more →</span>
-                    </div>
-                </div>
-
-                <div class="article-card" onclick="showArticle(3)">
-                    <div class="article-image">🏥</div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-tag">Healthcare</span>
+                            <span class="article-tag">Data Engineering</span>
                             <span>12 min read</span>
                         </div>
-                        <h3 class="article-title">AI in Healthcare: Transforming Patient Outcomes Through Data</h3>
-                        <p class="article-excerpt">Exploring how machine learning models are revolutionizing diagnosis, treatment planning, and preventive care in modern healthcare systems...</p>
+                        <h3 class="article-title">Why Tesla Robotaxis Switched to ClickHouse for 10ms Telemetry Analytics</h3>
+                        <p class="article-excerpt">From NMIMS hardware debugging to Tesla-scale telemetry. Why columnar databases beat traditional SQL for high-frequency sensor data, and how to build a portfolio-worthy pipeline...</p>
                         <span class="read-more">Read more →</span>
                     </div>
                 </div>
@@ -456,155 +430,64 @@
         // Sample article data - Replace with your own articles
         const articles = {
             1: {
-                title: "Building Production-Ready ML Pipelines: Lessons Learned",
-                tag: "Data Science",
-                readTime: "8 min read",
-                date: "January 25, 2026",
-                content: `
-                    <h2>Introduction</h2>
-                    <p>Building machine learning pipelines that work reliably in production is one of the most challenging aspects of data science. While training a model in a Jupyter notebook is straightforward, deploying it to serve real users requires careful consideration of data quality, model monitoring, and system design.</p>
-
-                    <p>Over the past year, I've built several ML pipelines from scratch, and I've learned valuable lessons about what makes them robust and maintainable. In this article, I'll share the key principles and practices that have helped me create production-ready systems.</p>
-
-                    <h2>The Foundation: Data Validation</h2>
-                    <p>The most critical component of any ML pipeline isn't the model—it's the data validation layer. Your model is only as good as the data it receives, and production data is messy, inconsistent, and full of surprises.</p>
-
-                    <p>Here's what I've learned to validate:</p>
-                    <ul>
-                        <li>Schema validation: Ensure columns exist and have expected types</li>
-                        <li>Value ranges: Check that numerical features fall within reasonable bounds</li>
-                        <li>Missing data patterns: Monitor which fields are null and how often</li>
-                        <li>Distribution drift: Compare incoming data distributions to training data</li>
-                    </ul>
-
-                    <h2>Handling Data Leakage</h2>
-                    <p>One of the most insidious problems in ML pipelines is data leakage. I once built a model that achieved 95% accuracy in validation but completely failed in production. The culprit? A feature that inadvertently contained information about the target variable.</p>
-
-                    <p>The lesson: Always implement strict temporal splits in your data, ensure your feature engineering pipeline can't access future information, and regularly audit your features for potential leakage.</p>
-
-                    <h2>Model Deployment Strategies</h2>
-                    <p>Deploying models safely requires more than just putting them behind an API. I've found that implementing a phased rollout strategy is essential. Start with a small percentage of traffic, monitor key metrics closely, and gradually increase exposure as confidence builds.</p>
-
-                    <h3>Key Metrics to Monitor</h3>
-                    <ul>
-                        <li>Prediction latency and throughput</li>
-                        <li>Model accuracy on live data</li>
-                        <li>Feature distribution shifts</li>
-                        <li>System resource utilization</li>
-                    </ul>
-
-                    <h2>Conclusion</h2>
-                    <p>Building production ML pipelines is as much about engineering discipline as it is about data science. The key is to start with strong foundations—robust data validation, careful feature engineering, and comprehensive monitoring—and iterate from there.</p>
-
-                    <p>Remember: a simple model that runs reliably in production is infinitely more valuable than a complex model that only works on your laptop.</p>
-                `
-            },
-            2: {
-                title: "The Evolution of Large Language Models: From GPT to Claude",
-                tag: "AI",
-                readTime: "10 min read",
-                date: "January 20, 2026",
-                content: `
-                    <h2>The Transformer Revolution</h2>
-                    <p>The story of modern large language models begins with a single paper: "Attention Is All You Need" published by Google researchers in 2017. This paper introduced the Transformer architecture, which would become the foundation for every major language model we use today.</p>
-
-                    <p>What made Transformers special? Unlike previous sequence models that processed text word by word, Transformers could attend to all words simultaneously, capturing long-range dependencies and contextual relationships that earlier models missed.</p>
-
-                    <h2>The GPT Family: Scaling Up</h2>
-                    <p>OpenAI's GPT (Generative Pre-trained Transformer) series demonstrated that language models could be dramatically improved simply by making them bigger and training them on more data. Each iteration brought new capabilities:</p>
-
-                    <ul>
-                        <li><strong>GPT-1 (2018):</strong> Showed that pre-training on large text corpora could improve downstream tasks</li>
-                        <li><strong>GPT-2 (2019):</strong> Generated surprisingly coherent text, raising concerns about misuse</li>
-                        <li><strong>GPT-3 (2020):</strong> Achieved few-shot learning, performing new tasks from just a few examples</li>
-                        <li><strong>GPT-4 (2023):</strong> Added multimodal capabilities and significantly improved reasoning</li>
-                    </ul>
-
-                    <h2>Claude: A Different Approach</h2>
-                    <p>Anthropic's Claude represents a different philosophy in AI development. Rather than simply maximizing capabilities, Claude's development has focused on safety, helpfulness, and harmlessness from the ground up.</p>
-
-                    <p>The key innovation is Constitutional AI, a training approach where the model learns to critique and revise its own responses according to a set of principles. This creates models that are not just powerful, but also aligned with human values.</p>
-
-                    <h2>The Technical Challenges</h2>
-                    <p>Building these models isn't just about throwing more compute at the problem. Engineers face incredible challenges:</p>
-
-                    <h3>Training Stability</h3>
-                    <p>Training models with billions of parameters is notoriously unstable. Small changes in learning rates or initialization can cause training to diverge, wasting millions of dollars in compute costs.</p>
-
-                    <h3>Context Length</h3>
-                    <p>The Transformer's attention mechanism scales quadratically with sequence length, making long contexts prohibitively expensive. Recent innovations like flash attention and sparse attention patterns are making longer contexts feasible.</p>
-
-                    <h2>What's Next?</h2>
-                    <p>The field is moving rapidly in several directions. We're seeing progress in multimodal models that can understand images, video, and audio alongside text. Researchers are exploring ways to make models more efficient, reducing the enormous computational costs of current systems.</p>
-
-                    <p>Perhaps most exciting is work on improving reasoning capabilities. Current models often struggle with multi-step logical reasoning and mathematical problem-solving. The next generation of models will likely be much better at these tasks.</p>
-
-                    <h2>Conclusion</h2>
-                    <p>We're still in the early days of large language models. As impressive as GPT-4 and Claude are, they're likely just the beginning. The combination of better architectures, more efficient training methods, and a deeper understanding of alignment will lead to AI systems that are more capable, more reliable, and more beneficial to humanity.</p>
-                `
-            },
-            3: {
-                title: "AI in Healthcare: Transforming Patient Outcomes Through Data",
-                tag: "Healthcare",
+                title: "Why Tesla Robotaxis Switched to ClickHouse for 10ms Telemetry Analytics",
+                tag: "Data Engineering",
                 readTime: "12 min read",
-                date: "January 15, 2026",
+                date: "January 27, 2026",
                 content: `
-                    <h2>The Healthcare Data Revolution</h2>
-                    <p>Healthcare is drowning in data. Every patient visit, lab test, imaging scan, and genetic sequencing generates massive amounts of information. Yet, historically, much of this data has been siloed, unstructured, and underutilized. AI is changing that, transforming how we diagnose diseases, plan treatments, and predict outcomes.</p>
+                    <p><em>Listen, if you're still trying to pipe high-frequency sensor data into a standard relational database, you're not just behind—you're basically trying to win a Formula 1 race in a rickshaw.</em></p>
 
-                    <h2>Medical Imaging: AI's First Success Story</h2>
-                    <p>Medical imaging was one of the first areas where AI demonstrated superhuman performance. Deep learning models can now detect patterns in X-rays, CT scans, and MRIs that human radiologists might miss.</p>
+                    <p>Back at NMIMS Mumbai, I was knee-deep in hardware, debugging drivetrain faults for Drishti Works beach robots. The real headache? We had a 40% fault rate because we couldn't see the data fast enough to stop a failure before it happened. We were flying blind. Fast forward to my time at Northeastern, and the scale has shifted from a few robots to millions of devices.</p>
 
-                    <h3>Real-World Impact</h3>
-                    <p>At many hospitals, AI systems now serve as a "second reader," flagging potentially concerning findings for radiologists to review. Studies have shown that AI-assisted diagnosis can:</p>
+                    <p>In 2026, the industry standard for this kind of "holy crap, that's a lot of data" problem isn't Postgres or even a standard Snowflake setup. It's ClickHouse. Here's why the big players like Tesla are ditching traditional row-based storage for columnar speed, and how you can build a pipeline that recruiters will actually respect.</p>
+
+                    <h2>The 1TB/Hour Problem: Why Postgres Chokes</h2>
+                    
+                    <p>Most people start with Postgres because it's reliable. But when you're dealing with Tesla-level telemetry—think GPS, battery thermals, LiDAR state, and drivetrain torque—you're hitting millions of rows per second.</p>
+
+                    <p>Postgres is row-oriented. To find the average battery temp of every Model 3 in Boston over the last hour, it has to scan every single row and every single column in those rows. It's slow. It's expensive. It's a bottleneck.</p>
+
+                    <p>ClickHouse is column-oriented. If you only need "Temperature" and "Timestamp," it only reads those two columns. It ignores the rest of the metadata. On the HackerNews frontpage, the consensus is clear: for OLAP (Online Analytical Processing) at the edge, if you aren't using a columnar store, you're burning money on compute.</p>
+
+                    <h2>The Real-World Stack: Tinybird + ClickHouse + Kafka</h2>
+                    
+                    <p>In 2026, nobody is manually writing <code>INSERT</code> statements for telemetry. The architecture shipping at top-tier startups looks like this:</p>
+
+                    <ol>
+                        <li><strong>The Edge (The "NMIMS" Layer):</strong> ESP32-S3 or Coral TPUs running Zephyr RTOS stream compact Protobuf messages over MQTT.</li>
+                        <li><strong>The Pipeline:</strong> A Kafka or Redpanda cluster ingests the firehose.</li>
+                        <li><strong>The Storage:</strong> ClickHouse consumes directly from Kafka via the <code>Kafka Storage Engine</code>. No intermediate "glue" code that breaks at 3 AM.</li>
+                        <li><strong>The API:</strong> Tinybird sits on top of ClickHouse, turning SQL queries into high-performance REST APIs in seconds.</li>
+                    </ol>
+
+                    <p>When I built the duplicate detection dashboard at SynapZen, the real win wasn't just the ML model; it was the Streamlit + PostgreSQL speed. But if I had 11.5 million records instead of 11.5k, Postgres would have folded. Switching to a ClickHouse-backed engine is how you go from "student project" to "enterprise-grade."</p>
+
+                    <h2>The "Secret Sauce": MergeTree Engines</h2>
+                    
+                    <p>If a recruiter asks how you handle high-frequency inserts, don't say "I just save it." Mention the MergeTree engine family.</p>
+
+                    <p>ClickHouse doesn't update rows. It writes parts and merges them in the background. It's designed for immutable, timestamped data. This is exactly what I needed back when I was doing solar power management—writing data as it happens and letting the engine handle the heavy lifting.</p>
+
+                    <p><strong>Pro Tip:</strong> In 2026, use <code>ReplicatedMergeTree</code> with ClickHouse Keeper. It's the "total jugaad" for high availability without the complexity of Zookeeper.</p>
+
+                    <h2>Implementation: How to Build This for Your Portfolio</h2>
+                    
+                    <p>Don't just talk about it—ship it. Here is the exact roadmap I'm using to level up my own portfolio:</p>
+
                     <ul>
-                        <li>Reduce false negatives in cancer screening by up to 15%</li>
-                        <li>Decrease time-to-diagnosis for critical conditions like stroke</li>
-                        <li>Free up radiologists to focus on complex cases requiring human judgment</li>
+                        <li><strong>Step 1: The Mock Firehose.</strong> Use a Python script to mimic 100 "robots" sending JSON telemetry to a Kafka topic.</li>
+                        <li><strong>Step 2: The Direct Consume.</strong> Set up a ClickHouse table with the <code>ENGINE = Kafka</code> setting. Let ClickHouse pull the data itself.</li>
+                        <li><strong>Step 3: The Aggregate.</strong> Create a Materialized View. This is the 2026 way to pre-calculate averages (like my 18% solar efficiency metrics) so your dashboard loads in 10ms, not 10 seconds.</li>
+                        <li><strong>Step 4: The Frontend.</strong> Connect it to Grafana or Evidence.dev.</li>
                     </ul>
 
-                    <h2>Predictive Analytics: Preventing Problems Before They Start</h2>
-                    <p>Perhaps even more powerful than diagnosis is prediction. Machine learning models can analyze electronic health records to identify patients at high risk of complications before they occur.</p>
+                    <h2>Final Real-Talk</h2>
+                    
+                    <p>Recruiters at places like Tesla or Amazon aren't looking for people who can write a <code>SELECT *</code>. They want engineers who understand Data Gravity. They want to know you can handle the "Real-time Edge" without the system crashing.</p>
 
-                    <h3>Sepsis Prediction</h3>
-                    <p>Sepsis, a life-threatening response to infection, kills over 250,000 Americans annually. Early detection is crucial, but symptoms are often subtle and easy to miss.</p>
+                    <p>Moving from Mumbai to Boston taught me one thing: the tools change, but the hustle to optimize remains the same. Stop building batch pipelines for a real-time world. Learn ClickHouse.</p>
 
-                    <p>AI models trained on vital signs, lab results, and clinical notes can predict sepsis onset hours before traditional methods, giving clinicians precious time to intervene. Some hospitals using these systems have reduced sepsis mortality by over 20%.</p>
-
-                    <h2>Drug Discovery: Accelerating the Pipeline</h2>
-                    <p>Developing new drugs traditionally takes 10-15 years and costs billions of dollars. AI is compressing these timelines dramatically by predicting which molecules are likely to be effective, safe, and manufacturable.</p>
-
-                    <p>AlphaFold's breakthrough in protein structure prediction has been particularly transformative. By accurately predicting how proteins fold, it's helping researchers understand disease mechanisms and design better drugs.</p>
-
-                    <h2>The Challenges Ahead</h2>
-                    <p>Despite enormous promise, AI in healthcare faces significant hurdles:</p>
-
-                    <h3>Data Quality and Bias</h3>
-                    <p>Healthcare data is messy, inconsistent, and often biased. Models trained predominantly on data from certain demographic groups may perform poorly for others. Ensuring fairness and equity is critical.</p>
-
-                    <h3>Clinical Integration</h3>
-                    <p>The best AI model is useless if clinicians don't trust it or can't integrate it into their workflow. Systems need to be transparent, explainable, and designed with end-users in mind.</p>
-
-                    <h3>Regulatory Complexity</h3>
-                    <p>Medical AI systems must meet rigorous safety and efficacy standards. Regulatory frameworks are still evolving to keep pace with rapid technological advancement.</p>
-
-                    <h2>Privacy and Security</h2>
-                    <p>Healthcare data is among the most sensitive information we have. Ensuring that AI systems protect patient privacy while still enabling valuable insights requires sophisticated techniques like federated learning and differential privacy.</p>
-
-                    <h2>The Path Forward</h2>
-                    <p>The future of AI in healthcare isn't about replacing doctors—it's about augmenting their capabilities. AI can handle routine tasks, flag potential issues, and provide decision support, freeing clinicians to focus on what humans do best: empathy, judgment, and complex reasoning.</p>
-
-                    <p>As these technologies mature, we'll likely see:</p>
-                    <ul>
-                        <li>Truly personalized medicine, with treatments tailored to individual genetic profiles</li>
-                        <li>Proactive healthcare that prevents disease rather than just treating it</li>
-                        <li>Democratized access to expert-level care, even in underserved areas</li>
-                    </ul>
-
-                    <h2>Conclusion</h2>
-                    <p>AI in healthcare is not science fiction—it's happening now, in hospitals and clinics around the world. While challenges remain, the potential to save lives, reduce suffering, and make healthcare more effective and accessible is too great to ignore.</p>
-
-                    <p>The question isn't whether AI will transform healthcare, but how quickly we can do it responsibly, ensuring that these powerful tools benefit everyone equitably.</p>
+                    <p>NMIMS taught me hardware. Northeastern taught me scale. ClickHouse is how I bridge them.</p>
                 `
             }
         };
