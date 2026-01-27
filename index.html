@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prasham's Tech Journal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e8ecef;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        nav a {
+            margin-left: 2rem;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        /* Articles Grid */
+        .articles-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e8ecef;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .article-tag {
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        .article-title {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 0.75rem;
+        }
+
+        /* Full Article View */
+        .article-full {
+            display: none;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .article-full.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: gap 0.3s;
+        }
+
+        .back-button:hover {
+            gap: 0.75rem;
+        }
+
+        .article-full-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e8ecef;
+        }
+
+        .article-full-title {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .article-full-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .article-full-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .article-full-content h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin: 2.5rem 0 1rem 0;
+            font-weight: 700;
+        }
+
+        .article-full-content h3 {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin: 2rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .article-full-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-full-content ul, .article-full-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .article-full-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-full-content code {
+            background: #f8fafc;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #2563eb;
+        }
+
+        .article-full-content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-full-content pre code {
+            background: none;
+            padding: 0;
+            color: #e2e8f0;
+        }
+
+        .article-full-content blockquote {
+            border-left: 4px solid #2563eb;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: #f8fafc;
+            border-top: 1px solid #e8ecef;
+            padding: 3rem 0;
+            margin-top: 6rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #2563eb;
+        }
+
+        /* About Section */
+        .about-section {
+            display: none;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .about-section.active {
+            display: block;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .article-full-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a class="logo" onclick="showHome()">Prasham's Journal</a>
+            <nav>
+                <a onclick="showHome()">Articles</a>
+                <a onclick="showAbout()">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home View -->
+    <div id="homeView">
+        <section class="hero">
+            <h1>Insights at the Intersection of Tech & Tomorrow</h1>
+            <p>Exploring AI, data science, healthcare innovation, and the future of technology</p>
+        </section>
+
+        <section class="articles-section">
+            <h2 class="section-title">Latest Articles</h2>
+            <div class="articles-grid" id="articlesGrid">
+                <div class="article-card" onclick="showArticle(1)">
+                    <div class="article-image">📊</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-tag">Data Science</span>
+                            <span>8 min read</span>
+                        </div>
+                        <h3 class="article-title">Building Production-Ready ML Pipelines: Lessons Learned</h3>
+                        <p class="article-excerpt">A deep dive into creating robust, scalable machine learning pipelines that handle real-world data challenges. From data validation to model deployment...</p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="showArticle(2)">
+                    <div class="article-image">🤖</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-tag">AI</span>
+                            <span>10 min read</span>
+                        </div>
+                        <h3 class="article-title">The Evolution of Large Language Models: From GPT to Claude</h3>
+                        <p class="article-excerpt">Understanding the architectural innovations that are shaping the next generation of AI assistants and how they're transforming human-computer interaction...</p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="showArticle(3)">
+                    <div class="article-image">🏥</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-tag">Healthcare</span>
+                            <span>12 min read</span>
+                        </div>
+                        <h3 class="article-title">AI in Healthcare: Transforming Patient Outcomes Through Data</h3>
+                        <p class="article-excerpt">Exploring how machine learning models are revolutionizing diagnosis, treatment planning, and preventive care in modern healthcare systems...</p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Article Full View -->
+    <div id="articleView" class="article-full">
+        <a class="back-button" onclick="showHome()">← Back to articles</a>
+        <div id="articleContent"></div>
+    </div>
+
+    <!-- About Section -->
+    <div id="aboutView" class="about-section">
+        <a class="back-button" onclick="showHome()">← Back to articles</a>
+        <h1 class="section-title">About</h1>
+        <div class="about-content">
+            <p>Welcome to my corner of the internet where I share insights on technology, data science, and innovation.</p>
+            
+            <p>I'm Prasham, currently pursuing my MS in Information Systems at Northeastern University. My passion lies at the intersection of data science, machine learning, and real-world problem-solving.</p>
+            
+            <p>Through this blog, I explore emerging trends in AI, share practical experiences from building data pipelines and ML systems, and discuss how technology is reshaping industries from healthcare to finance.</p>
+            
+            <p>When I'm not writing code or analyzing data, you'll find me exploring new technologies, contributing to open-source projects, and learning something new every day.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p style="color: #64748b; margin-bottom: 0.5rem;">© 2026 Prasham's Tech Journal</p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com/yourusername" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample article data - Replace with your own articles
+        const articles = {
+            1: {
+                title: "Building Production-Ready ML Pipelines: Lessons Learned",
+                tag: "Data Science",
+                readTime: "8 min read",
+                date: "January 25, 2026",
+                content: `
+                    <h2>Introduction</h2>
+                    <p>Building machine learning pipelines that work reliably in production is one of the most challenging aspects of data science. While training a model in a Jupyter notebook is straightforward, deploying it to serve real users requires careful consideration of data quality, model monitoring, and system design.</p>
+
+                    <p>Over the past year, I've built several ML pipelines from scratch, and I've learned valuable lessons about what makes them robust and maintainable. In this article, I'll share the key principles and practices that have helped me create production-ready systems.</p>
+
+                    <h2>The Foundation: Data Validation</h2>
+                    <p>The most critical component of any ML pipeline isn't the model—it's the data validation layer. Your model is only as good as the data it receives, and production data is messy, inconsistent, and full of surprises.</p>
+
+                    <p>Here's what I've learned to validate:</p>
+                    <ul>
+                        <li>Schema validation: Ensure columns exist and have expected types</li>
+                        <li>Value ranges: Check that numerical features fall within reasonable bounds</li>
+                        <li>Missing data patterns: Monitor which fields are null and how often</li>
+                        <li>Distribution drift: Compare incoming data distributions to training data</li>
+                    </ul>
+
+                    <h2>Handling Data Leakage</h2>
+                    <p>One of the most insidious problems in ML pipelines is data leakage. I once built a model that achieved 95% accuracy in validation but completely failed in production. The culprit? A feature that inadvertently contained information about the target variable.</p>
+
+                    <p>The lesson: Always implement strict temporal splits in your data, ensure your feature engineering pipeline can't access future information, and regularly audit your features for potential leakage.</p>
+
+                    <h2>Model Deployment Strategies</h2>
+                    <p>Deploying models safely requires more than just putting them behind an API. I've found that implementing a phased rollout strategy is essential. Start with a small percentage of traffic, monitor key metrics closely, and gradually increase exposure as confidence builds.</p>
+
+                    <h3>Key Metrics to Monitor</h3>
+                    <ul>
+                        <li>Prediction latency and throughput</li>
+                        <li>Model accuracy on live data</li>
+                        <li>Feature distribution shifts</li>
+                        <li>System resource utilization</li>
+                    </ul>
+
+                    <h2>Conclusion</h2>
+                    <p>Building production ML pipelines is as much about engineering discipline as it is about data science. The key is to start with strong foundations—robust data validation, careful feature engineering, and comprehensive monitoring—and iterate from there.</p>
+
+                    <p>Remember: a simple model that runs reliably in production is infinitely more valuable than a complex model that only works on your laptop.</p>
+                `
+            },
+            2: {
+                title: "The Evolution of Large Language Models: From GPT to Claude",
+                tag: "AI",
+                readTime: "10 min read",
+                date: "January 20, 2026",
+                content: `
+                    <h2>The Transformer Revolution</h2>
+                    <p>The story of modern large language models begins with a single paper: "Attention Is All You Need" published by Google researchers in 2017. This paper introduced the Transformer architecture, which would become the foundation for every major language model we use today.</p>
+
+                    <p>What made Transformers special? Unlike previous sequence models that processed text word by word, Transformers could attend to all words simultaneously, capturing long-range dependencies and contextual relationships that earlier models missed.</p>
+
+                    <h2>The GPT Family: Scaling Up</h2>
+                    <p>OpenAI's GPT (Generative Pre-trained Transformer) series demonstrated that language models could be dramatically improved simply by making them bigger and training them on more data. Each iteration brought new capabilities:</p>
+
+                    <ul>
+                        <li><strong>GPT-1 (2018):</strong> Showed that pre-training on large text corpora could improve downstream tasks</li>
+                        <li><strong>GPT-2 (2019):</strong> Generated surprisingly coherent text, raising concerns about misuse</li>
+                        <li><strong>GPT-3 (2020):</strong> Achieved few-shot learning, performing new tasks from just a few examples</li>
+                        <li><strong>GPT-4 (2023):</strong> Added multimodal capabilities and significantly improved reasoning</li>
+                    </ul>
+
+                    <h2>Claude: A Different Approach</h2>
+                    <p>Anthropic's Claude represents a different philosophy in AI development. Rather than simply maximizing capabilities, Claude's development has focused on safety, helpfulness, and harmlessness from the ground up.</p>
+
+                    <p>The key innovation is Constitutional AI, a training approach where the model learns to critique and revise its own responses according to a set of principles. This creates models that are not just powerful, but also aligned with human values.</p>
+
+                    <h2>The Technical Challenges</h2>
+                    <p>Building these models isn't just about throwing more compute at the problem. Engineers face incredible challenges:</p>
+
+                    <h3>Training Stability</h3>
+                    <p>Training models with billions of parameters is notoriously unstable. Small changes in learning rates or initialization can cause training to diverge, wasting millions of dollars in compute costs.</p>
+
+                    <h3>Context Length</h3>
+                    <p>The Transformer's attention mechanism scales quadratically with sequence length, making long contexts prohibitively expensive. Recent innovations like flash attention and sparse attention patterns are making longer contexts feasible.</p>
+
+                    <h2>What's Next?</h2>
+                    <p>The field is moving rapidly in several directions. We're seeing progress in multimodal models that can understand images, video, and audio alongside text. Researchers are exploring ways to make models more efficient, reducing the enormous computational costs of current systems.</p>
+
+                    <p>Perhaps most exciting is work on improving reasoning capabilities. Current models often struggle with multi-step logical reasoning and mathematical problem-solving. The next generation of models will likely be much better at these tasks.</p>
+
+                    <h2>Conclusion</h2>
+                    <p>We're still in the early days of large language models. As impressive as GPT-4 and Claude are, they're likely just the beginning. The combination of better architectures, more efficient training methods, and a deeper understanding of alignment will lead to AI systems that are more capable, more reliable, and more beneficial to humanity.</p>
+                `
+            },
+            3: {
+                title: "AI in Healthcare: Transforming Patient Outcomes Through Data",
+                tag: "Healthcare",
+                readTime: "12 min read",
+                date: "January 15, 2026",
+                content: `
+                    <h2>The Healthcare Data Revolution</h2>
+                    <p>Healthcare is drowning in data. Every patient visit, lab test, imaging scan, and genetic sequencing generates massive amounts of information. Yet, historically, much of this data has been siloed, unstructured, and underutilized. AI is changing that, transforming how we diagnose diseases, plan treatments, and predict outcomes.</p>
+
+                    <h2>Medical Imaging: AI's First Success Story</h2>
+                    <p>Medical imaging was one of the first areas where AI demonstrated superhuman performance. Deep learning models can now detect patterns in X-rays, CT scans, and MRIs that human radiologists might miss.</p>
+
+                    <h3>Real-World Impact</h3>
+                    <p>At many hospitals, AI systems now serve as a "second reader," flagging potentially concerning findings for radiologists to review. Studies have shown that AI-assisted diagnosis can:</p>
+                    <ul>
+                        <li>Reduce false negatives in cancer screening by up to 15%</li>
+                        <li>Decrease time-to-diagnosis for critical conditions like stroke</li>
+                        <li>Free up radiologists to focus on complex cases requiring human judgment</li>
+                    </ul>
+
+                    <h2>Predictive Analytics: Preventing Problems Before They Start</h2>
+                    <p>Perhaps even more powerful than diagnosis is prediction. Machine learning models can analyze electronic health records to identify patients at high risk of complications before they occur.</p>
+
+                    <h3>Sepsis Prediction</h3>
+                    <p>Sepsis, a life-threatening response to infection, kills over 250,000 Americans annually. Early detection is crucial, but symptoms are often subtle and easy to miss.</p>
+
+                    <p>AI models trained on vital signs, lab results, and clinical notes can predict sepsis onset hours before traditional methods, giving clinicians precious time to intervene. Some hospitals using these systems have reduced sepsis mortality by over 20%.</p>
+
+                    <h2>Drug Discovery: Accelerating the Pipeline</h2>
+                    <p>Developing new drugs traditionally takes 10-15 years and costs billions of dollars. AI is compressing these timelines dramatically by predicting which molecules are likely to be effective, safe, and manufacturable.</p>
+
+                    <p>AlphaFold's breakthrough in protein structure prediction has been particularly transformative. By accurately predicting how proteins fold, it's helping researchers understand disease mechanisms and design better drugs.</p>
+
+                    <h2>The Challenges Ahead</h2>
+                    <p>Despite enormous promise, AI in healthcare faces significant hurdles:</p>
+
+                    <h3>Data Quality and Bias</h3>
+                    <p>Healthcare data is messy, inconsistent, and often biased. Models trained predominantly on data from certain demographic groups may perform poorly for others. Ensuring fairness and equity is critical.</p>
+
+                    <h3>Clinical Integration</h3>
+                    <p>The best AI model is useless if clinicians don't trust it or can't integrate it into their workflow. Systems need to be transparent, explainable, and designed with end-users in mind.</p>
+
+                    <h3>Regulatory Complexity</h3>
+                    <p>Medical AI systems must meet rigorous safety and efficacy standards. Regulatory frameworks are still evolving to keep pace with rapid technological advancement.</p>
+
+                    <h2>Privacy and Security</h2>
+                    <p>Healthcare data is among the most sensitive information we have. Ensuring that AI systems protect patient privacy while still enabling valuable insights requires sophisticated techniques like federated learning and differential privacy.</p>
+
+                    <h2>The Path Forward</h2>
+                    <p>The future of AI in healthcare isn't about replacing doctors—it's about augmenting their capabilities. AI can handle routine tasks, flag potential issues, and provide decision support, freeing clinicians to focus on what humans do best: empathy, judgment, and complex reasoning.</p>
+
+                    <p>As these technologies mature, we'll likely see:</p>
+                    <ul>
+                        <li>Truly personalized medicine, with treatments tailored to individual genetic profiles</li>
+                        <li>Proactive healthcare that prevents disease rather than just treating it</li>
+                        <li>Democratized access to expert-level care, even in underserved areas</li>
+                    </ul>
+
+                    <h2>Conclusion</h2>
+                    <p>AI in healthcare is not science fiction—it's happening now, in hospitals and clinics around the world. While challenges remain, the potential to save lives, reduce suffering, and make healthcare more effective and accessible is too great to ignore.</p>
+
+                    <p>The question isn't whether AI will transform healthcare, but how quickly we can do it responsibly, ensuring that these powerful tools benefit everyone equitably.</p>
+                `
+            }
+        };
+
+        // Navigation functions
+        function showHome() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('articleView').classList.remove('active');
+            document.getElementById('aboutView').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showAbout() {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('articleView').classList.remove('active');
+            document.getElementById('aboutView').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showArticle(articleId) {
+            const article = articles[articleId];
+            if (!article) return;
+
+            const articleContent = document.getElementById('articleContent');
+            articleContent.innerHTML = `
+                <div class="article-full-header">
+                    <h1 class="article-full-title">${article.title}</h1>
+                    <div class="article-full-meta">
+                        <span class="article-tag">${article.tag}</span>
+                        <span>${article.readTime}</span>
+                        <span>${article.date}</span>
+                    </div>
+                </div>
+                <div class="article-full-content">
+                    ${article.content}
+                </div>
+            `;
+
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('aboutView').classList.remove('active');
+            document.getElementById('articleView').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
