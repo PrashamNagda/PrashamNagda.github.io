@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prasham's Tech Journal</title>
+    <title>Prasham's Journal - Tech & Innovation</title>
     <style>
         * {
             margin: 0;
@@ -12,20 +12,25 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
+            font-family: 'Charter', 'Georgia', serif;
+            line-height: 1.7;
+            color: #1a1a1a;
             background: #ffffff;
         }
 
         /* Header */
         header {
             background: #ffffff;
-            border-bottom: 1px solid #e8ecef;
-            padding: 2rem 0;
+            border-bottom: 1px solid #e6e6e6;
+            padding: 1.5rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: box-shadow 0.3s;
+        }
+
+        header.scrolled {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .header-content {
@@ -38,49 +43,159 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #1a1a1a;
             text-decoration: none;
-            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: color 0.3s;
         }
 
-        nav a {
-            margin-left: 2rem;
-            color: #64748b;
+        .logo:hover {
+            color: #2563eb;
+        }
+
+        /* Desktop Nav */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .desktop-nav a {
+            color: #6b6b6b;
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s;
-            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
-        nav a:hover {
+        .desktop-nav a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 101;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            max-width: 300px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -2px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            padding: 5rem 2rem 2rem;
+            z-index: 100;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: #1a1a1a;
+            text-decoration: none;
+            padding: 1rem 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #e6e6e6;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
             color: #2563eb;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Hero Section */
         .hero {
             max-width: 800px;
-            margin: 4rem auto;
+            margin: 4rem auto 3rem;
             padding: 0 2rem;
             text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            animation: scaleIn 0.6s ease;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            color: #1e293b;
+            font-size: 2.8rem;
+            color: #1a1a1a;
             margin-bottom: 1rem;
-            font-weight: 800;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: #64748b;
+            font-size: 1.2rem;
+            color: #6b6b6b;
             margin-bottom: 2rem;
         }
 
         /* Articles Grid */
-        .articles-section {
+        .articles-section, .projects-section {
             max-width: 1200px;
             margin: 4rem auto;
             padding: 0 2rem;
@@ -88,43 +203,52 @@
 
         .section-title {
             font-size: 2rem;
-            color: #1e293b;
+            color: #1a1a1a;
             margin-bottom: 2rem;
             font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
-        .articles-grid {
+        .articles-grid, .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        .article-card {
+        .article-card, .project-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #e8ecef;
+            transition: all 0.3s ease;
+            border: 1px solid #e6e6e6;
             cursor: pointer;
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
         }
 
-        .article-card:hover {
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .article-card:hover, .project-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border-color: #2563eb;
         }
 
-        .article-image {
+        .article-image, .project-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
+            object-fit: cover;
+            transition: transform 0.3s;
         }
 
-        .article-content {
+        .article-card:hover .article-image,
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .article-content, .project-content {
             padding: 1.5rem;
         }
 
@@ -133,7 +257,8 @@
             gap: 1rem;
             margin-bottom: 1rem;
             font-size: 0.85rem;
-            color: #64748b;
+            color: #6b6b6b;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .article-tag {
@@ -141,16 +266,17 @@
             font-weight: 500;
         }
 
-        .article-title {
+        .article-title, .project-title {
             font-size: 1.4rem;
-            color: #1e293b;
+            color: #1a1a1a;
             margin-bottom: 0.75rem;
             font-weight: 700;
             line-height: 1.3;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
-        .article-excerpt {
-            color: #64748b;
+        .article-excerpt, .project-description {
+            color: #6b6b6b;
             line-height: 1.6;
             margin-bottom: 1rem;
         }
@@ -163,6 +289,7 @@
             align-items: center;
             gap: 0.5rem;
             transition: gap 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .read-more:hover {
@@ -172,9 +299,10 @@
         /* Full Article View */
         .article-full {
             display: none;
-            max-width: 800px;
+            max-width: 680px;
             margin: 4rem auto;
             padding: 0 2rem;
+            animation: fadeIn 0.5s ease;
         }
 
         .article-full.active {
@@ -185,57 +313,112 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #2563eb;
+            color: #6b6b6b;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 2rem;
             cursor: pointer;
-            transition: gap 0.3s;
+            transition: all 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .back-button:hover {
+            color: #1a1a1a;
             gap: 0.75rem;
         }
 
         .article-full-header {
             margin-bottom: 2rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid #e8ecef;
+            border-bottom: 1px solid #e6e6e6;
         }
 
         .article-full-title {
             font-size: 2.5rem;
-            color: #1e293b;
-            margin-bottom: 1rem;
-            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
             line-height: 1.2;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .article-full-meta {
             display: flex;
             gap: 1.5rem;
-            color: #64748b;
+            color: #6b6b6b;
             font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .like-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: 1px solid #e6e6e6;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.9rem;
+            color: #6b6b6b;
+        }
+
+        .like-button:hover {
+            background: #f8f8f8;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .like-button.liked {
+            background: #eff6ff;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .like-icon {
+            transition: transform 0.3s;
+        }
+
+        .like-button.liked .like-icon {
+            animation: heartBeat 0.5s ease;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
         }
 
         .article-full-content {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.8;
-            color: #374151;
+            color: #1a1a1a;
         }
 
         .article-full-content h2 {
             font-size: 1.8rem;
-            color: #1e293b;
+            color: #1a1a1a;
             margin: 2.5rem 0 1rem 0;
             font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .article-full-content h3 {
             font-size: 1.4rem;
-            color: #1e293b;
+            color: #1a1a1a;
             margin: 2rem 0 0.75rem 0;
             font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .article-full-content p {
@@ -248,21 +431,31 @@
         }
 
         .article-full-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-full-content em {
+            font-style: italic;
+            color: #4b5563;
+        }
+
+        .article-full-content strong {
+            font-weight: 600;
+            color: #1a1a1a;
         }
 
         .article-full-content code {
-            background: #f8fafc;
+            background: #f5f5f5;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
             font-family: 'Monaco', 'Courier New', monospace;
             font-size: 0.9em;
-            color: #2563eb;
+            color: #d63384;
         }
 
         .article-full-content pre {
-            background: #1e293b;
-            color: #e2e8f0;
+            background: #1a1a1a;
+            color: #e6e6e6;
             padding: 1.5rem;
             border-radius: 8px;
             overflow-x: auto;
@@ -272,21 +465,30 @@
         .article-full-content pre code {
             background: none;
             padding: 0;
-            color: #e2e8f0;
+            color: #e6e6e6;
         }
 
         .article-full-content blockquote {
             border-left: 4px solid #2563eb;
             padding-left: 1.5rem;
             margin: 1.5rem 0;
-            color: #64748b;
+            color: #6b6b6b;
             font-style: italic;
+        }
+
+        .article-full-content img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 8px;
         }
 
         /* Footer */
         footer {
-            background: #f8fafc;
-            border-top: 1px solid #e8ecef;
+            background: #fafafa;
+            border-top: 1px solid #e6e6e6;
             padding: 3rem 0;
             margin-top: 6rem;
             text-align: center;
@@ -306,9 +508,10 @@
         }
 
         .social-links a {
-            color: #64748b;
+            color: #6b6b6b;
             text-decoration: none;
             transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .social-links a:hover {
@@ -318,7 +521,7 @@
         /* About Section */
         .about-section {
             display: none;
-            max-width: 800px;
+            max-width: 680px;
             margin: 4rem auto;
             padding: 0 2rem;
         }
@@ -328,18 +531,58 @@
         }
 
         .about-content {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.8;
-            color: #374151;
+            color: #1a1a1a;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
 
-            .articles-grid {
+            .articles-grid, .projects-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -347,46 +590,112 @@
                 font-size: 2rem;
             }
 
-            nav {
-                display: none;
+            .article-full-content {
+                font-size: 1.1rem;
             }
         }
 
         .hidden {
             display: none !important;
         }
+
+        /* Project Cards Specific */
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .project-link:hover {
+            color: #1d4ed8;
+        }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <div class="header-content">
             <a class="logo" onclick="showHome()">Prasham's Journal</a>
-            <nav>
+            
+            <nav class="desktop-nav">
                 <a onclick="showHome()">Articles</a>
+                <a onclick="showProjects()">Projects</a>
                 <a onclick="showAbout()">About</a>
             </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a onclick="showHome(); closeMobileMenu()">Articles</a>
+        <a onclick="showProjects(); closeMobileMenu()">Projects</a>
+        <a onclick="showAbout(); closeMobileMenu()">About</a>
+    </div>
 
     <!-- Home View -->
     <div id="homeView">
         <section class="hero">
+            <div class="profile-photo">PN</div>
             <h1>Insights at the Intersection of Tech & Tomorrow</h1>
             <p>Exploring AI, data science, healthcare innovation, and the future of technology</p>
         </section>
 
         <section class="articles-section">
             <h2 class="section-title">Latest Articles</h2>
-            <div class="articles-grid" id="articlesGrid">
+            <div class="articles-grid">
                 <div class="article-card" onclick="showArticle(1)">
-                    <img src="Images/Tesla-Robotaxis-Switched-to-ClickHouse.png" alt="Tesla Robotaxis ClickHouse" style="width: 100%; height: 200px; object-fit: cover;">
+                    <img src="Images/Tesla-Robotaxis-Switched-to-ClickHouse.png" alt="Tesla Robotaxis ClickHouse" class="article-image">
                     <div class="article-content">
                         <div class="article-meta">
                             <span class="article-tag">Data Engineering</span>
                             <span>12 min read</span>
                         </div>
                         <h3 class="article-title">Why Tesla Robotaxis Switched to ClickHouse for 10ms Telemetry Analytics</h3>
-                        <p class="article-excerpt">From NMIMS hardware debugging to Tesla-scale telemetry. Why columnar databases beat traditional SQL for high-frequency sensor data, and how to build a portfolio-worthy pipeline...</p>
+                        <p class="article-excerpt">From NMIMS hardware debugging to Tesla-scale telemetry. Why columnar databases beat traditional SQL for high-frequency sensor data...</p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="showArticle(2)">
+                    <div class="article-image" style="background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🤖</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-tag">AI Engineering</span>
+                            <span>10 min read</span>
+                        </div>
+                        <h3 class="article-title">Why Data Teams Switched to Agentic RAG in Jan 2026</h3>
+                        <p class="article-excerpt">From static retrieval to self-correcting agents. How LangGraph and agentic workflows are killing the "Garbage In, Garbage Out" cycle...</p>
                         <span class="read-more">Read more →</span>
                     </div>
                 </div>
@@ -400,6 +709,103 @@
         <div id="articleContent"></div>
     </div>
 
+    <!-- Projects Section -->
+    <div id="projectsView" class="projects-section hidden">
+        <a class="back-button" onclick="showHome()">← Back to home</a>
+        <h1 class="section-title">Projects</h1>
+        <div class="projects-grid">
+            <div class="project-card">
+                <!-- ADD IMAGE HERE: Images/crs-project.png -->
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🚂</div>
+                <div class="project-content">
+                    <h3 class="project-title">Commuter Reservation System (CRS)</h3>
+                    <p class="project-description">Oracle PL/SQL database system with automated validations, waitlist management, and real-time seat availability tracking. Implements 12-layer circuit protection for bookings with autonomous transaction handling.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Oracle PL/SQL</span>
+                        <span class="tech-tag">Database Design</span>
+                        <span class="tech-tag">Business Logic</span>
+                        <span class="tech-tag">SQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Commuter_Reservation_System" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <!-- ADD IMAGE HERE: Images/covid-project.png -->
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📊</div>
+                <div class="project-content">
+                    <h3 class="project-title">COVID-19 Data Analysis & Visualization</h3>
+                    <p class="project-description">Comprehensive analysis of global COVID-19 data using SQL for data extraction and Tableau for interactive visualization. Analyzes infection rates, death percentages, and vaccination progress across 190+ countries.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">SQL Server</span>
+                        <span class="tech-tag">Tableau</span>
+                        <span class="tech-tag">Data Analysis</span>
+                        <span class="tech-tag">ETL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Covid_Project" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <!-- ADD IMAGE HERE: Images/pswr-project.png -->
+                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🤖</div>
+                <div class="project-content">
+                    <h3 class="project-title">Parallelized Synchronized Warehousing Robots (PSWR)</h3>
+                    <p class="project-description">Multi-agent robotic system with OpenCV ArUco marker detection, A* pathfinding, and Point & Shoot navigation. Three robots coordinate via TCP/IP for collision-free pallet handling without ROS.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">A* Algorithm</span>
+                        <span class="tech-tag">Robotics</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/PSWR-PARALLELIZED-SYNCHRONIZED-WAREHOUSING-ROBOTS-" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <!-- ADD IMAGE HERE: Images/hospital-app-project.png -->
+                <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🏥</div>
+                <div class="project-content">
+                    <h3 class="project-title">Hospital Management App</h3>
+                    <p class="project-description">Flutter mobile app with GPS live tracking, expense management, and team-specific dashboards. Features secure FTP integration, Firebase authentication, and real-time work hour logging for 4 hospital teams.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Flutter</span>
+                        <span class="tech-tag">Dart</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">FTP</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/hospital_management_app" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <!-- ADD IMAGE HERE: Images/smartbank-project.png -->
+                <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🔋</div>
+                <div class="project-content">
+                    <h3 class="project-title">SmartBank - Connected Power Bank</h3>
+                    <p class="project-description">20,000 mAh power bank with Qualcomm QC3.0 (18W), ESP32-C3 BLE 5.0, device tracking, and SmartBank Connect app. Features 12-layer circuit protection and Injoinic IP5328P SoC with custom PCB design.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">ESP32</span>
+                        <span class="tech-tag">EasyEDA</span>
+                        <span class="tech-tag">BLE 5.0</span>
+                        <span class="tech-tag">PCB Design</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Smart_PowerBank" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- About Section -->
     <div id="aboutView" class="about-section">
         <a class="back-button" onclick="showHome()">← Back to articles</a>
@@ -407,7 +813,7 @@
         <div class="about-content">
             <p>Welcome to my corner of the internet where I share insights on technology, data science, and innovation.</p>
             
-            <p>I'm Prasham, currently pursuing my MS in Information Systems at Northeastern University. My passion lies at the intersection of data science, machine learning, and real-world problem-solving.</p>
+            <p>I'm Prasham Nagda, currently pursuing my MS in Information Systems at Northeastern University. My passion lies at the intersection of data science, machine learning, and real-world problem-solving.</p>
             
             <p>Through this blog, I explore emerging trends in AI, share practical experiences from building data pipelines and ML systems, and discuss how technology is reshaping industries from healthcare to finance.</p>
             
@@ -417,8 +823,8 @@
 
     <footer>
         <div class="footer-content">
-            <p style="color: #64748b; margin-bottom: 0.5rem;">© 2026 Prasham's Tech Journal</p>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
+            <p style="color: #6b6b6b; margin-bottom: 0.5rem;">© 2026 Prasham's Journal</p>
+            <p style="color: #999; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
             <div class="social-links">
                 <a href="https://github.com/PrashamNagda" target="_blank">GitHub</a>
                 <a href="https://www.linkedin.com/in/prasham-nagda-a877321b6/" target="_blank">LinkedIn</a>
@@ -427,7 +833,7 @@
     </footer>
 
     <script>
-        // Sample article data - Replace with your own articles
+        // Article data
         const articles = {
             1: {
                 title: "Why Tesla Robotaxis Switched to ClickHouse for 10ms Telemetry Analytics",
@@ -493,14 +899,132 @@
 
                     <p>NMIMS taught me hardware. Northeastern taught me scale. ClickHouse is how I bridge them.</p>
                 `
+            },
+            2: {
+                title: "Why Data Teams Switched to Agentic RAG in Jan 2026",
+                tag: "AI Engineering",
+                readTime: "10 min read",
+                date: "January 28, 2026",
+                content: `
+                    <p><em>If you're still deploying a basic "Retrieve → Generate" pipeline and calling it a RAG system, your architecture is officially legacy code.</em></p>
+
+                    <p>As of January 12, 2026, the data science community on Arxiv shifted the goalposts. A landmark paper, "Is Agentic RAG worth it? An experimental comparison of RAG approaches" (arXiv:2601.07711), proved what many of us "hustling" in the US job market already suspected: Agentic RAG isn't just a trend—it's the only way to kill the "Garbage In, Garbage Out" cycle that plagues production AI.</p>
+
+                    <p>Back at Northeastern, I learned about scale. But back at NMIMS Mumbai, I learned the art of pragmatic engineering—the hacker intuition that kicks in when the standard documentation fails you. When I built the Visual Pantry pipeline using Gemini Vision, the real headache wasn't the image recognition; it was the retrieval. If the user asked for a recipe for "red peppers" but the database only had "capsicum," a static RAG pipeline would just stare at the screen and hallucinate a "no results found" error.</p>
+
+                    <p>In 2026, we don't let our users hit dead ends. We build agents that fight for the answer.</p>
+
+                    <h2>The "Static" RAG Death Spiral</h2>
+                    
+                    <p>Traditional RAG systems are like a librarian who only looks at the first shelf. If they don't find the book there, they tell you it doesn't exist. They retrieve once, hope for the best, and pipe whatever they find into the LLM.</p>
+
+                    <p>The result?</p>
+
+                    <ul>
+                        <li><strong>Noisy Context:</strong> The retriever grabs 5 chunks, but only 1 is actually relevant. The LLM gets confused by the 4 "junk" chunks.</li>
+                        <li><strong>Query Mismatch:</strong> The user's colloquial phrasing doesn't match your vector store's technical jargon.</li>
+                        <li><strong>Hallucinations:</strong> The LLM tries to be "helpful" by making up an answer based on the wrong documents.</li>
+                    </ul>
+
+                    <p>This is why a recent 2026 industry survey found that 65% of enterprise RAG systems failed to meet user expectations. They were reactive, not proactive.</p>
+
+                    <h2>The 2026 Solution: Agentic RAG (The "Agentic Loop")</h2>
+                    
+                    <p>Agentic RAG treats retrieval as a tool, not a step. Instead of a linear path, we use LangGraph to build a stateful, iterative loop. Think of it as a supervisor watching the retrieval process and saying, "Wait, these documents are trash. Rewrite the query and try again."</p>
+
+                    <p>According to the Jan 12th Arxiv findings, this self-corrective approach isn't just "nicer"—it's fundamentally more accurate across multi-hop and general QA benchmarks. It's the difference between a system that says "I don't know" and a system that says "I didn't find it under 'capsicum,' so I tried 'red peppers' and found 5 recipes."</p>
+
+                    <h2>The 2026 Agentic Stack</h2>
+
+                    <ul>
+                        <li><strong>Orchestration:</strong> LangGraph (Stateful, multi-turn reasoning).</li>
+                        <li><strong>Retrieval:</strong> Pinecone/Chroma with hybrid search (BM25 + Dense).</li>
+                        <li><strong>Observability:</strong> LangSmith (specifically for Loop Efficiency tracking).</li>
+                        <li><strong>Inference:</strong> vLLM for low-latency, high-throughput agent calls.</li>
+                    </ul>
+
+                    <h2>Implementation: What Hiring Managers Actually Eat Up</h2>
+                    
+                    <p>If you want to impress a recruiter at Google or a high-growth startup, don't just show them a Python script. Show them a State Machine.</p>
+
+                    <p>Here is the exact implementation logic I'm building into my portfolio to prove I understand 2026-level AI engineering:</p>
+
+                    <h3>1. The Reflection Loop</h3>
+
+                    <p>Instead of one-shot generation, the agent critiques its own retrieval.</p>
+
+                    <ul>
+                        <li><strong>Node A:</strong> Retrieve documents.</li>
+                        <li><strong>Node B:</strong> Evaluate relevance (The "Grader").</li>
+                        <li><strong>Node C:</strong> If score &lt; 0.7, trigger a Question Rewriter node and loop back to Node A.</li>
+                    </ul>
+
+                    <h3>2. Self-Correction Nodes</h3>
+
+                    <p>I implemented these in my latest projects to handle "context drift." If the retrieved documents contradict each other, a specific agent node is tasked with finding a "tie-breaker" document or flagging the ambiguity to the user.</p>
+
+                    <h3>3. Tracking "Loop Efficiency" in LangSmith</h3>
+
+                    <p>This is the recruiter magnet. I don't just say my system is better; I show the LangSmith charts.</p>
+
+                    <p><strong>Metric:</strong> Average loops per successful query.</p>
+
+                    <p><strong>The Goal:</strong> If your agent has to loop 5 times to find an answer, your embeddings are broken. I aim for a 1.2 loop average, proving the initial retrieval is strong but the "safety net" is there.</p>
+
+                    <h2>Why This Works for My Resume (and Yours)</h2>
+                    
+                    <p>Hiring managers in Boston and Silicon Valley are being flooded with "AI Engineers" who just know how to call an API. By focusing on Agentic RAG, I'm signaling three things:</p>
+
+                    <ul>
+                        <li><strong>I understand production failures:</strong> I know that data is messy and retrieval is the bottleneck.</li>
+                        <li><strong>I can build stateful systems:</strong> LangGraph is harder than LangChain. It proves I can handle complex, non-deterministic logic.</li>
+                        <li><strong>I care about Reliability over Hype:</strong> I'm not just chasing a higher accuracy score; I'm building a system that self-heals when it breaks.</li>
+                    </ul>
+
+                    <p>I spent my summer in NJ at SynapZen building duplicate detection ML. If I were building that today, I wouldn't just use a static similarity model. I'd use an agentic workflow to "interview" the messy records and decide why they are duplicates.</p>
+
+                    <p><strong>Stop building pipelines. Start building agents that fight for the truth.</strong></p>
+                `
             }
         };
 
-        // Navigation functions
+        let currentLikes = {};
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay.addEventListener('click', closeMobileMenu);
+
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        // Navigation
         function showHome() {
             document.getElementById('homeView').classList.remove('hidden');
             document.getElementById('articleView').classList.remove('active');
             document.getElementById('aboutView').classList.remove('active');
+            document.getElementById('projectsView').classList.add('hidden');
             window.scrollTo(0, 0);
         }
 
@@ -508,12 +1032,24 @@
             document.getElementById('homeView').classList.add('hidden');
             document.getElementById('articleView').classList.remove('active');
             document.getElementById('aboutView').classList.add('active');
+            document.getElementById('projectsView').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showProjects() {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('articleView').classList.remove('active');
+            document.getElementById('aboutView').classList.remove('active');
+            document.getElementById('projectsView').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
 
         function showArticle(articleId) {
             const article = articles[articleId];
             if (!article) return;
+
+            const likeCount = currentLikes[articleId] || 0;
+            const isLiked = likeCount > 0;
 
             const articleContent = document.getElementById('articleContent');
             articleContent.innerHTML = `
@@ -524,6 +1060,12 @@
                         <span>${article.readTime}</span>
                         <span>${article.date}</span>
                     </div>
+                    <div class="article-actions">
+                        <button class="like-button ${isLiked ? 'liked' : ''}" onclick="toggleLike(${articleId})">
+                            <span class="like-icon">${isLiked ? '❤️' : '🤍'}</span>
+                            <span id="like-count-${articleId}">${likeCount > 0 ? likeCount : ''}</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="article-full-content">
                     ${article.content}
@@ -532,8 +1074,29 @@
 
             document.getElementById('homeView').classList.add('hidden');
             document.getElementById('aboutView').classList.remove('active');
+            document.getElementById('projectsView').classList.add('hidden');
             document.getElementById('articleView').classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        function toggleLike(articleId) {
+            const currentCount = currentLikes[articleId] || 0;
+            const newCount = currentCount > 0 ? 0 : 1;
+            currentLikes[articleId] = newCount;
+
+            const likeButton = document.querySelector('.like-button');
+            const likeCountSpan = document.getElementById(`like-count-${articleId}`);
+            const likeIcon = document.querySelector('.like-icon');
+
+            if (newCount > 0) {
+                likeButton.classList.add('liked');
+                likeIcon.textContent = '❤️';
+                likeCountSpan.textContent = newCount;
+            } else {
+                likeButton.classList.remove('liked');
+                likeIcon.textContent = '🤍';
+                likeCountSpan.textContent = '';
+            }
         }
     </script>
 </body>
