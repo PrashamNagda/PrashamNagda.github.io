@@ -1,4 +1,3 @@
-// Article metadata for homepage cards
 const articlesData = [
     {
         id: 'trade-dress-cutover',
