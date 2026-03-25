@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Data Teams Switched to Agentic RAG - Prasham's Journal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="header-content">
+            <a class="logo" href="../index.html">Prasham's Journal</a>
+            
+            <nav class="desktop-nav">
+                <a href="../index.html">Articles</a>
+                <a href="../projects.html">Projects</a>
+                <a href="../about.html">About</a>
+            </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html" onclick="closeMobileMenu()">Articles</a>
+        <a href="../projects.html" onclick="closeMobileMenu()">Projects</a>
+        <a href="../about.html" onclick="closeMobileMenu()">About</a>
+    </div>
+
+    <article class="article-page">
+        <a href="../index.html" class="back-button">← Back to articles</a>
+
+        <div class="article-header">
+            <h1 class="article-page-title">Why Data Teams Switched to Agentic RAG in Jan 2026</h1>
+            <div class="article-page-meta">
+                <span class="article-tag">AI Engineering</span>
+                <span>10 min read</span>
+                <span>January 28, 2026</span>
+            </div>
+            <div class="article-actions">
+                <button class="like-button" onclick="toggleLike('agentic-rag')">
+                    <span class="like-icon">🤍</span>
+                    <span id="like-count"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="article-body">
+            <p><em>If you're still deploying a basic "Retrieve → Generate" pipeline and calling it a RAG system, your architecture is officially legacy code.</em></p>
+
+            <img src="../Images/Agentic_RAG.png" alt="Agentic RAG Architecture">
+
+            <p>As of January 12, 2026, the data science community on Arxiv shifted the goalposts. A landmark paper, "Is Agentic RAG worth it? An experimental comparison of RAG approaches" (arXiv:2601.07711), proved what many of us "hustling" in the US job market already suspected: Agentic RAG isn't just a trend—it's the only way to kill the "Garbage In, Garbage Out" cycle that plagues production AI.</p>
+
+            <p>Back at Northeastern, I learned about scale. But back at NMIMS Mumbai, I learned the art of pragmatic engineering—the hacker intuition that kicks in when the standard documentation fails you. When I built the Visual Pantry pipeline using Gemini Vision, the real headache wasn't the image recognition; it was the retrieval. If the user asked for a recipe for "red peppers" but the database only had "capsicum," a static RAG pipeline would just stare at the screen and hallucinate a "no results found" error.</p>
+
+            <p>In 2026, we don't let our users hit dead ends. We build agents that fight for the answer.</p>
+
+            <h2>The "Static" RAG Death Spiral</h2>
+            
+            <p>Traditional RAG systems are like a librarian who only looks at the first shelf. If they don't find the book there, they tell you it doesn't exist. They retrieve once, hope for the best, and pipe whatever they find into the LLM.</p>
+
+            <p>The result?</p>
+
+            <ul>
+                <li><strong>Noisy Context:</strong> The retriever grabs 5 chunks, but only 1 is actually relevant. The LLM gets confused by the 4 "junk" chunks.</li>
+                <li><strong>Query Mismatch:</strong> The user's colloquial phrasing doesn't match your vector store's technical jargon.</li>
+                <li><strong>Hallucinations:</strong> The LLM tries to be "helpful" by making up an answer based on the wrong documents.</li>
+            </ul>
+
+            <p>This is why a recent 2026 industry survey found that 65% of enterprise RAG systems failed to meet user expectations. They were reactive, not proactive.</p>
+
+            <h2>The 2026 Solution: Agentic RAG (The "Agentic Loop")</h2>
+            
+            <p>Agentic RAG treats retrieval as a tool, not a step. Instead of a linear path, we use LangGraph to build a stateful, iterative loop. Think of it as a supervisor watching the retrieval process and saying, "Wait, these documents are trash. Rewrite the query and try again."</p>
+
+            <p>According to the Jan 12th Arxiv findings, this self-corrective approach isn't just "nicer"—it's fundamentally more accurate across multi-hop and general QA benchmarks. It's the difference between a system that says "I don't know" and a system that says "I didn't find it under 'capsicum,' so I tried 'red peppers' and found 5 recipes."</p>
+
+            <h2>The 2026 Agentic Stack</h2>
+
+            <ul>
+                <li><strong>Orchestration:</strong> LangGraph (Stateful, multi-turn reasoning).</li>
+                <li><strong>Retrieval:</strong> Pinecone/Chroma with hybrid search (BM25 + Dense).</li>
+                <li><strong>Observability:</strong> LangSmith (specifically for Loop Efficiency tracking).</li>
+                <li><strong>Inference:</strong> vLLM for low-latency, high-throughput agent calls.</li>
+            </ul>
+
+            <h2>Implementation: What Hiring Managers Actually Eat Up</h2>
+            
+            <p>If you want to impress a recruiter at Google or a high-growth startup, don't just show them a Python script. Show them a State Machine.</p>
+
+            <p>Here is the exact implementation logic I'm building into my portfolio to prove I understand 2026-level AI engineering:</p>
+
+            <h3>1. The Reflection Loop</h3>
+
+            <p>Instead of one-shot generation, the agent critiques its own retrieval.</p>
+
+            <ul>
+                <li><strong>Node A:</strong> Retrieve documents.</li>
+                <li><strong>Node B:</strong> Evaluate relevance (The "Grader").</li>
+                <li><strong>Node C:</strong> If score &lt; 0.7, trigger a Question Rewriter node and loop back to Node A.</li>
+            </ul>
+
+            <h3>2. Self-Correction Nodes</h3>
+
+            <p>I implemented these in my latest projects to handle "context drift." If the retrieved documents contradict each other, a specific agent node is tasked with finding a "tie-breaker" document or flagging the ambiguity to the user.</p>
+
+            <h3>3. Tracking "Loop Efficiency" in LangSmith</h3>
+
+            <p>This is the recruiter magnet. I don't just say my system is better; I show the LangSmith charts.</p>
+
+            <p><strong>Metric:</strong> Average loops per successful query.</p>
+
+            <p><strong>The Goal:</strong> If your agent has to loop 5 times to find an answer, your embeddings are broken. I aim for a 1.2 loop average, proving the initial retrieval is strong but the "safety net" is there.</p>
+
+            <h2>Why This Works for My Resume (and Yours)</h2>
+            
+            <p>Hiring managers in Boston and Silicon Valley are being flooded with "AI Engineers" who just know how to call an API. By focusing on Agentic RAG, I'm signaling three things:</p>
+
+            <ul>
+                <li><strong>I understand production failures:</strong> I know that data is messy and retrieval is the bottleneck.</li>
+                <li><strong>I can build stateful systems:</strong> LangGraph is harder than LangChain. It proves I can handle complex, non-deterministic logic.</li>
+                <li><strong>I care about Reliability over Hype:</strong> I'm not just chasing a higher accuracy score; I'm building a system that self-heals when it breaks.</li>
+            </ul>
+
+            <p>I spent my summer in NJ at SynapZen building duplicate detection ML. If I were building that today, I wouldn't just use a static similarity model. I'd use an agentic workflow to "interview" the messy records and decide why they are duplicates.</p>
+
+            <p><strong>Stop building pipelines. Start building agents that fight for the truth.</strong></p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-content">
+            <p style="color: #6b6b6b; margin-bottom: 0.5rem;">© 2026 Prasham's Journal</p>
+            <p style="color: #999; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
+            <div class="social-links">
+                <a href="https://github.com/PrashamNagda" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/prasham-nagda-a877321b6/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize like button for this article
+        initializeLikeButton('agentic-rag');
+    </script>
+</body>
+</html>

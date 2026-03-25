@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Tesla Robotaxis Switched to ClickHouse - Prasham's Journal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="header-content">
+            <a class="logo" href="../index.html">Prasham's Journal</a>
+            
+            <nav class="desktop-nav">
+                <a href="../index.html">Articles</a>
+                <a href="../projects.html">Projects</a>
+                <a href="../about.html">About</a>
+            </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html" onclick="closeMobileMenu()">Articles</a>
+        <a href="../projects.html" onclick="closeMobileMenu()">Projects</a>
+        <a href="../about.html" onclick="closeMobileMenu()">About</a>
+    </div>
+
+    <article class="article-page">
+        <a href="../index.html" class="back-button">← Back to articles</a>
+
+        <div class="article-header">
+            <h1 class="article-page-title">Why Tesla Robotaxis Switched to ClickHouse for 10ms Telemetry Analytics</h1>
+            <div class="article-page-meta">
+                <span class="article-tag">Data Engineering</span>
+                <span>12 min read</span>
+                <span>January 27, 2026</span>
+            </div>
+            <div class="article-actions">
+                <button class="like-button" onclick="toggleLike('clickhouse-telemetry')">
+                    <span class="like-icon">🤍</span>
+                    <span id="like-count"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="article-body">
+            <p><em>Listen, if you're still trying to pipe high-frequency sensor data into a standard relational database, you're not just behind—you're basically trying to win a Formula 1 race in a rickshaw.</em></p>
+
+            <img src="../Images/Tesla-Robotaxis-Switched-to-ClickHouse.png" alt="Tesla Robotaxis ClickHouse Analytics">
+
+            <p>Back at NMIMS Mumbai, I was knee-deep in hardware, debugging drivetrain faults for Drishti Works beach robots. The real headache? We had a 40% fault rate because we couldn't see the data fast enough to stop a failure before it happened. We were flying blind. Fast forward to my time at Northeastern, and the scale has shifted from a few robots to millions of devices.</p>
+
+            <p>In 2026, the industry standard for this kind of "holy crap, that's a lot of data" problem isn't Postgres or even a standard Snowflake setup. It's ClickHouse. Here's why the big players like Tesla are ditching traditional row-based storage for columnar speed, and how you can build a pipeline that recruiters will actually respect.</p>
+
+            <h2>The 1TB/Hour Problem: Why Postgres Chokes</h2>
+            
+            <p>Most people start with Postgres because it's reliable. But when you're dealing with Tesla-level telemetry—think GPS, battery thermals, LiDAR state, and drivetrain torque—you're hitting millions of rows per second.</p>
+
+            <p>Postgres is row-oriented. To find the average battery temp of every Model 3 in Boston over the last hour, it has to scan every single row and every single column in those rows. It's slow. It's expensive. It's a bottleneck.</p>
+
+            <p>ClickHouse is column-oriented. If you only need "Temperature" and "Timestamp," it only reads those two columns. It ignores the rest of the metadata. On the HackerNews frontpage, the consensus is clear: for OLAP (Online Analytical Processing) at the edge, if you aren't using a columnar store, you're burning money on compute.</p>
+
+            <h2>The Real-World Stack: Tinybird + ClickHouse + Kafka</h2>
+            
+            <p>In 2026, nobody is manually writing <code>INSERT</code> statements for telemetry. The architecture shipping at top-tier startups looks like this:</p>
+
+            <ol>
+                <li><strong>The Edge (The "NMIMS" Layer):</strong> ESP32-S3 or Coral TPUs running Zephyr RTOS stream compact Protobuf messages over MQTT.</li>
+                <li><strong>The Pipeline:</strong> A Kafka or Redpanda cluster ingests the firehose.</li>
+                <li><strong>The Storage:</strong> ClickHouse consumes directly from Kafka via the <code>Kafka Storage Engine</code>. No intermediate "glue" code that breaks at 3 AM.</li>
+                <li><strong>The API:</strong> Tinybird sits on top of ClickHouse, turning SQL queries into high-performance REST APIs in seconds.</li>
+            </ol>
+
+            <p>When I built the duplicate detection dashboard at SynapZen, the real win wasn't just the ML model; it was the Streamlit + PostgreSQL speed. But if I had 11.5 million records instead of 11.5k, Postgres would have folded. Switching to a ClickHouse-backed engine is how you go from "student project" to "enterprise-grade."</p>
+
+            <h2>The "Secret Sauce": MergeTree Engines</h2>
+            
+            <p>If a recruiter asks how you handle high-frequency inserts, don't say "I just save it." Mention the MergeTree engine family.</p>
+
+            <p>ClickHouse doesn't update rows. It writes parts and merges them in the background. It's designed for immutable, timestamped data. This is exactly what I needed back when I was doing solar power management—writing data as it happens and letting the engine handle the heavy lifting.</p>
+
+            <p><strong>Pro Tip:</strong> In 2026, use <code>ReplicatedMergeTree</code> with ClickHouse Keeper. It's the "total jugaad" for high availability without the complexity of Zookeeper.</p>
+
+            <h2>Implementation: How to Build This for Your Portfolio</h2>
+            
+            <p>Don't just talk about it—ship it. Here is the exact roadmap I'm using to level up my own portfolio:</p>
+
+            <ul>
+                <li><strong>Step 1: The Mock Firehose.</strong> Use a Python script to mimic 100 "robots" sending JSON telemetry to a Kafka topic.</li>
+                <li><strong>Step 2: The Direct Consume.</strong> Set up a ClickHouse table with the <code>ENGINE = Kafka</code> setting. Let ClickHouse pull the data itself.</li>
+                <li><strong>Step 3: The Aggregate.</strong> Create a Materialized View. This is the 2026 way to pre-calculate averages (like my 18% solar efficiency metrics) so your dashboard loads in 10ms, not 10 seconds.</li>
+                <li><strong>Step 4: The Frontend.</strong> Connect it to Grafana or Evidence.dev.</li>
+            </ul>
+
+            <h2>Final Real-Talk</h2>
+            
+            <p>Recruiters at places like Tesla or Amazon aren't looking for people who can write a <code>SELECT *</code>. They want engineers who understand Data Gravity. They want to know you can handle the "Real-time Edge" without the system crashing.</p>
+
+            <p>Moving from Mumbai to Boston taught me one thing: the tools change, but the hustle to optimize remains the same. Stop building batch pipelines for a real-time world. Learn ClickHouse.</p>
+
+            <p>NMIMS taught me hardware. Northeastern taught me scale. ClickHouse is how I bridge them.</p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-content">
+            <p style="color: #6b6b6b; margin-bottom: 0.5rem;">© 2026 Prasham's Journal</p>
+            <p style="color: #999; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
+            <div class="social-links">
+                <a href="https://github.com/PrashamNagda" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/prasham-nagda-a877321b6/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize like button for this article
+        initializeLikeButton('clickhouse-telemetry');
+    </script>
+</body>
+</html>

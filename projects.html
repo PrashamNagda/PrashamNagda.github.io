@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Prasham's Journal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="header-content">
+            <a class="logo" href="index.html">Prasham's Journal</a>
+            
+            <nav class="desktop-nav">
+                <a href="index.html">Articles</a>
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+            </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="closeMobileMenu()">Articles</a>
+        <a href="projects.html" onclick="closeMobileMenu()">Projects</a>
+        <a href="about.html" onclick="closeMobileMenu()">About</a>
+    </div>
+
+    <section class="hero">
+        <h1>Projects</h1>
+        <p>Building end-to-end systems from data pipelines to intelligent applications</p>
+    </section>
+
+    <section class="projects-section">
+        <div class="projects-grid">
+            <!-- Visual Pantry Chef -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍳</div>
+                <div class="project-content">
+                    <h3 class="project-title">Visual Pantry Chef</h3>
+                    <p class="project-description">AI-powered recipe generator using FastAPI, PostgreSQL, Google Gemini 2.0 Flash for ingredient recognition, and OpenAI GPT-4 for personalized recipes. Achieves 90%+ ingredient classification accuracy with JWT authentication.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Gemini Vision</span>
+                        <span class="tech-tag">OpenAI GPT-4</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Visual_Pantry_Chef_Project" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate Detection -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📊</div>
+                <div class="project-content">
+                    <h3 class="project-title">Duplicate Detection ML Pipeline</h3>
+                    <p class="project-description">End-to-end ML system with PostgreSQL, blocking strategies, and similarity features. Streamlit dashboard with XGBoost, Random Forest, and Logistic Regression achieving 87-95% ROC-AUC across 11.5k synthetic records.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">XGBoost</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/duplicate-detection-ml" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRS Database -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🚂</div>
+                <div class="project-content">
+                    <h3 class="project-title">Commuter Reservation System (CRS)</h3>
+                    <p class="project-description">Oracle PL/SQL database system with automated validations, waitlist management, and real-time seat availability tracking. Implements 12-layer circuit protection for bookings with autonomous transaction handling.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Oracle PL/SQL</span>
+                        <span class="tech-tag">Database Design</span>
+                        <span class="tech-tag">Business Logic</span>
+                        <span class="tech-tag">SQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Commuter_Reservation_System" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COVID-19 Analysis -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📊</div>
+                <div class="project-content">
+                    <h3 class="project-title">COVID-19 Data Analysis & Visualization</h3>
+                    <p class="project-description">Comprehensive analysis of global COVID-19 data using SQL for data extraction and Tableau for interactive visualization. Analyzes infection rates, death percentages, and vaccination progress across 190+ countries.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">SQL Server</span>
+                        <span class="tech-tag">Tableau</span>
+                        <span class="tech-tag">Data Analysis</span>
+                        <span class="tech-tag">ETL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Covid_Project" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PSWR Robots -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🤖</div>
+                <div class="project-content">
+                    <h3 class="project-title">Parallelized Synchronized Warehousing Robots (PSWR)</h3>
+                    <p class="project-description">Multi-agent robotic system with OpenCV ArUco marker detection, A* pathfinding, and Point & Shoot navigation. Three robots coordinate via TCP/IP for collision-free pallet handling without ROS.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">A* Algorithm</span>
+                        <span class="tech-tag">Robotics</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/PSWR-PARALLELIZED-SYNCHRONIZED-WAREHOUSING-ROBOTS-" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hospital Management App -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🏥</div>
+                <div class="project-content">
+                    <h3 class="project-title">Hospital Management App</h3>
+                    <p class="project-description">Flutter mobile app with GPS live tracking, expense management, and team-specific dashboards. Features secure FTP integration, Firebase authentication, and real-time work hour logging for 4 hospital teams.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Flutter</span>
+                        <span class="tech-tag">Dart</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">FTP</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/hospital_management_app" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SmartBank -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🔋</div>
+                <div class="project-content">
+                    <h3 class="project-title">SmartBank - Connected Power Bank</h3>
+                    <p class="project-description">20,000 mAh power bank with Qualcomm QC3.0 (18W), ESP32-C3 BLE 5.0, device tracking, and SmartBank Connect app. Features 12-layer circuit protection and Injoinic IP5328P SoC with custom PCB design.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">ESP32</span>
+                        <span class="tech-tag">EasyEDA</span>
+                        <span class="tech-tag">BLE 5.0</span>
+                        <span class="tech-tag">PCB Design</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrashamNagda/Smart_PowerBank" target="_blank" class="project-link">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p style="color: #6b6b6b; margin-bottom: 0.5rem;">© 2026 Prasham's Journal</p>
+            <p style="color: #999; font-size: 0.9rem;">Sharing insights on technology, data, and innovation</p>
+            <div class="social-links">
+                <a href="https://github.com/PrashamNagda" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/prasham-nagda-a877321b6/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
